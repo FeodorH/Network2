@@ -67,6 +67,24 @@
                 <?php elseif ($field == 'bio'): ?>
                     <label for="bio">Биография:</label>
                     <textarea id="bio" name="bio" rows="5" class="<?= $errors['bio'] ? 'error' : '' ?>" placeholder="Расскажите о себе..."><?= htmlspecialchars($values['bio'] ?? '') ?></textarea>
+                <div class="form-group">
+                    <label>Языки программирования (выберите хотя бы один):</label><br>
+                    <?php
+                    $allLanguages = getAllLanguages(getDB());
+                    $selectedLangs = $values['languages'] ?? [];
+                    ?>
+                    <?php foreach ($allLanguages as $lang): ?>
+                        <label style="display: inline-block; margin-right: 15px;">
+                            <input type="checkbox" name="languages[]" value="<?= $lang['id'] ?>"
+                                <?= in_array($lang['id'], $selectedLangs) ? 'checked' : '' ?>
+                                <?= (!empty($errors['languages'])) ? 'class="error"' : '' ?>
+                            > <?= htmlspecialchars($lang['name']) ?>
+                        </label>
+                    <?php endforeach; ?>
+                    <?php if (!empty($errors['languages'])): ?>
+                        <span class="error-message"><?= $error_messages['languages'] ?></span>
+                    <?php endif; ?>
+                </div>
                 <?php elseif ($field == 'agreement'): ?>
                     <div class="checkbox-group">
                         <input type="checkbox" id="agreement" name="agreement" <?= ($values['agreement'] ?? '') == 'on' ? 'checked' : '' ?>>
