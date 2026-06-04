@@ -19,7 +19,7 @@ function getDB() {
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
             // Автоматически добавляем колонки, если их нет (для старых таблиц)
-            $db->exec("ALTER TABLE ".DB_TABLE." ADD COLUMN IF NOT EXISTS login VARCHAR(50) UNIQUE, ADD COLUMN IF NOT EXISTS password_hash VARCHAR(255)");
+            //$db->exec("ALTER TABLE ".DB_TABLE." ADD COLUMN IF NOT EXISTS login VARCHAR(50) UNIQUE, ADD COLUMN IF NOT EXISTS password_hash VARCHAR(255)");
         } catch (PDOException $e) {
             die("Ошибка БД: " . $e->getMessage());
         }
