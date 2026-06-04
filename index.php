@@ -59,16 +59,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if ($isAuthorized) {
         // Авторизованный: берём данные из БД
         $userData = getUserById($userId, $pdo);
+        $scalarFields = ['fio', 'phone', 'email', 'birthdate', 'gender', 'bio', 'agreement']; // без 'languages'
         $values['languages'] = getUserLanguages($userId, $pdo);
         if ($userData) {
-            foreach ($fields as $field) {
+            foreach ($scalarFields as $field) {
                 $values[$field] = $userData[$field] ?? '';
-                // для чекбокса agreement приводим к 'on' если 1
                 if ($field == 'agreement') {
                     $values[$field] = ($userData['agreement'] == 1) ? 'on' : '';
                 }
             }
         }
+        foreach ($scalarFields as $field) $errors[$field] = false;
+        $errors['languages'] = false;
         // У авторизованного нет ошибок (при GET)
         foreach ($fields as $field) $errors[$field] = false;
     } else {

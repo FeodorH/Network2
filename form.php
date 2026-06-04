@@ -71,7 +71,7 @@
                     <label>Языки программирования (выберите хотя бы один):</label><br>
                     <?php
                     $allLanguages = getAllLanguages(getDB());
-                    $selectedLangs = $values['languages'] ?? [];
+                    $selectedLangs = isset($values['languages']) && is_array($values['languages']) ? $values['languages'] : [];
                     ?>
                     <?php foreach ($allLanguages as $lang): ?>
                         <label style="display: inline-block; margin-right: 15px;">
